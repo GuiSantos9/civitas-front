@@ -56,42 +56,32 @@
                     
                     <div class="category-grid">
                         <label class="category-option">
-                            <input type="checkbox" name="categorias" value="infraestrutura">
+                            <input type="checkbox" name="category" value="FLOORING">
                             <span class="custom-checkbox"></span>
-                            Infraestrutura
+                            Infraestrutura / Pavimentação
                         </label>
                         <label class="category-option">
-                            <input type="checkbox" name="categorias" value="iluminacao">
+                            <input type="checkbox" name="category" value="LIGHTING">
                             <span class="custom-checkbox"></span>
                             Iluminação
                         </label>
                         <label class="category-option">
-                            <input type="checkbox" name="categorias" value="saneamento">
-                            <span class="custom-checkbox"></span>
-                            Saneamento
-                        </label>
-                        <label class="category-option">
-                            <input type="checkbox" name="categorias" value="saude">
+                            <input type="checkbox" name="category" value="HEALTH">
                             <span class="custom-checkbox"></span>
                             Saúde
                         </label>
                         <label class="category-option">
-                            <input type="checkbox" name="categorias" value="seguranca">
+                            <input type="checkbox" name="category" value="SCHOOL_SAFETY">
                             <span class="custom-checkbox"></span>
-                            Segurança
-                        </label>
-                        <label class="category-option">
-                            <input type="checkbox" name="categorias" value="meio-ambiente">
-                            <span class="custom-checkbox"></span>
-                            Meio Ambiente
+                            Segurança Escolar
                         </label>
                     </div>
 
                     <div class="form-group-inline mt-4">
                         <label class="category-option flex items-center">
-                            <input type="checkbox" id="check-outro" name="categorias" value="outro">
+                            <input type="checkbox" id="check-outro" name="category" value="OUTRO_PREVISTO">
                             <span class="custom-checkbox"></span>
-                            Outro
+                            Outro (Não mapeado no Java)
                         </label>
                         <input type="text" id="input-outro" name="categoriaOutro" disabled placeholder="Especifique a categoria">
                     </div>
@@ -102,7 +92,7 @@
                     
                     <div class="form-group">
                         <label for="descricao">Descreva qual o seu problema:</label>
-                        <textarea id="descricao" name="descricao" rows="4" required placeholder="Relate detalhadamente o ocorrido..."></textarea>
+                        <textarea id="descricao" name="description" rows="4" required placeholder="Relate detalhadamente o ocorrido..."></textarea>
                     </div>
 
                     <div class="form-grid-cep-endereco">
@@ -117,26 +107,26 @@
                         </div>
                         <div class="form-group">
                             <label for="endereco">Endereço:</label>
-                            <input type="text" id="endereco" name="endereco" required placeholder="Rua, Avenida...">
+                            <input type="text" id="endereco" name="location" required placeholder="Rua, Avenida, Número...">
                         </div>
                     </div>
 
                     <div class="form-grid-address-details">
                         <div class="form-group">
                             <label for="bairro">Bairro:</label>
-                            <input type="text" id="bairro" name="bairro" required>
+                            <input type="text" id="bairro" name="bairro">
                         </div>
                         <div class="form-group">
                             <label for="cidade">Cidade:</label>
-                            <input type="text" id="cidade" name="cidade" required>
+                            <input type="text" id="cidade" name="cidade">
                         </div>
                         <div class="form-group">
                             <label for="estado">Estado:</label>
-                            <input type="text" id="estado" name="estado" required>
+                            <input type="text" id="estado" name="estado">
                         </div>
                         <div class="form-group">
                             <label for="numero">Número:</label>
-                            <input type="text" id="numero" name="numero" required>
+                            <input type="text" id="numero" name="numero">
                         </div>
                     </div>
                 </section>
@@ -150,10 +140,8 @@
         <div id="bottom-bar-container"></div>
     </div>
 
-    <script src="../js/components/bottom-bar.js"></script>
+    <script src="../js/api/api.js"></script>
     <script src="../js/api/cep.js"></script>
-    <script src="../js/pages/request-form.js"></script>
-    <script src="../js/api/api.js"></script> <script src="../js/api/cep.js"></script>
     <script src="../js/pages/request-form.js"></script>
 </body>
 </html>

@@ -1,4 +1,5 @@
-const BASE_URL = 'http://localhost:8080/api'; // Altere para a porta/rota real do seu Spring Boot
+// Alterado para a porta 8080 baseada no seu log do Tomcat
+const BASE_URL = 'http://localhost:8080'; 
 
 /**
  * Recupera os cabeçalhos padrão para as requisições,
@@ -19,24 +20,19 @@ function getHeaders() {
 }
 
 /**
- * Trata a resposta do servidor, convertendo para JSON 
- * ou lançando erros legíveis.
+ * Trata a resposta do servidor, convertendo para JSON ou lançando erros legíveis.
  */
 async function handleResponse(response) {
-    // Se o backend responder 401 (Não autorizado) ou 403 (Proibido),
-    // limpa o token expirado/inválido e manda o usuário de volta para o login.
     if (response.status === 401 || response.status === 403) {
         localStorage.removeItem('civitas_token');
         localStorage.removeItem('civitas_user');
         
-        // Evita loop de redirecionamento se já estiver na página de login
         if (!window.location.pathname.includes('login.html')) {
             window.location.href = '/pages/login.html';
         }
         throw new Error('Sessão expirada. Por favor, faça login novamente.');
     }
 
-    // Tenta parsear o JSON se houver conteúdo no corpo da resposta
     const contentType = response.headers.get('content-type');
     let data = null;
     if (contentType && contentType.includes('application/json')) {
@@ -44,7 +40,6 @@ async function handleResponse(response) {
     }
 
     if (!response.ok) {
-        // Se o Spring devolver uma mensagem de erro estruturada, usa ela
         const errorMessage = data?.message || `Erro na requisição: ${response.status}`;
         throw new Error(errorMessage);
     }
@@ -52,7 +47,7 @@ async function handleResponse(response) {
     return data;
 }
 
-// Objeto global da API com os métodos HTTP mapeados
+// Objeto global da API
 const api = {
     async get(endpoint) {
         try {

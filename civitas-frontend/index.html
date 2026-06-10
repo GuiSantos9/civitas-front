@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script>
+        // Se já existir um token salvo, pula o login e abre o dashboard diretamente
+        const token = localStorage.getItem('civitas_token');
+        if (token) {
+            window.location.href = 'pages/dashboard.html';
+        } else {
+            window.location.href = 'pages/login.html';
+        }
+    </script>
+</head>
+<body>
+    <p>Redirecionando...</p>
+</body>
+</html>v

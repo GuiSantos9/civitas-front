@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Civitas - Dashboard</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/pages/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <div class="app-shell">
+        <header class="app-header">
+            <div class="header-logo">
+                <span>Civitas</span><div class="logo-dot"></div>
+            </div>
+            <div class="header-search">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" placeholder="Buscar no sistema...">
+            </div>
+            <div class="header-avatar">G</div>
+        </header>
+
+        <main class="page-content">
+            <h1 class="page-title">Dias de suas solicitações</h1>
+
+            <section class="card mb-4">
+                <div class="calendar-header">
+                    <button class="btn-cal-nav"><i class="fa-solid fa-chevron-left"></i></button>
+                    <span class="calendar-month-year">JUNHO 2026</span>
+                    <button class="btn-cal-nav"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+                
+                <div class="calendar-grid-weekdays">
+                    <div>S</div><div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div>
+                </div>
+                
+                <div class="calendar-grid-days">
+                    <span class="day-muted">31</span>
+                    <span>1</span><span>2</span><span class="day-active">3</span><span>4</span><span>5</span><span>6</span>
+                    <span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span>
+                    <span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span>
+                    <span>21</span><span>22</span><span>23</span><span>24</span><span>25</span><span>26</span><span>27</span>
+                    <span>28</span><span>29</span><span>30</span>
+                    <span class="day-muted">1</span><span class="day-muted">2</span><span class="day-muted">3</span><span class="day-muted">4</span>
+                </div>
+            </section>
+
+            <section class="chart-section mb-4">
+                <h2 class="section-title text-center">Taxa de melhora nas cidades</h2>
+                <div class="card chart-container">
+                    <canvas id="chartLineMelhoria"></canvas>
+                </div>
+            </section>
+
+            <section class="chart-section">
+                <h2 class="section-title text-center">Serviços mais solicitados</h2>
+                <div class="card chart-container flex justify-center">
+                    <canvas id="chartPieServicos"></canvas>
+                </div>
+            </section>
+        </main>
+
+        <div id="bottom-bar-container"></div>
+    </div>
+
+    <script src="../js/api/api.js"></script>
+    <script src="../js/components/bottom-bar.js"></script>
+    <script src="../js/pages/dashboard.js"></script>
+</body>
+</html>

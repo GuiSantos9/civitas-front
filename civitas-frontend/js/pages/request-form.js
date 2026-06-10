@@ -1,3 +1,5 @@
+// js/pages/request-form.js
+
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('form-solicitacao');
     const checkOutro = document.getElementById('check-outro');
@@ -18,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 2. Máscara simples para o CEP (ex: 87000-000)
+    // 2. Máscara para o CEP (87000-000)
     cepInput.addEventListener('input', (e) => {
         let value = e.target.value.replace(/\D/g, '');
         if (value.length > 5) {
@@ -27,52 +29,57 @@ document.addEventListener('DOMContentLoaded', () => {
         e.target.value = value;
     });
 
-    // 3. Ação de buscar o CEP
+    // 3. Autocompletar endereço com ViaCEP
     const preencherEndereco = async () => {
         const cep = cepInput.value;
         if (cep.length < 8) return;
 
-        // Animação de carregamento (opcional: mudar ícone)
         btnBuscaCep.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
-
         const resultado = await fetchEnderecoByCep(cep);
 
         if (!resultado.erro) {
-            document.getElementById('endereco').value = resultado.logradouro || '';
+            document.getElementById('endereco').value = `${resultado.logradouro || ''}, ${resultado.bairro || ''}`;
             document.getElementById('bairro').value = resultado.bairro || '';
             document.getElementById('cidade').value = resultado.localidade || '';
             document.getElementById('estado').value = resultado.uf || '';
-            document.getElementById('numero').focus(); // Foca no número para o usuário digitar
+            document.getElementById('numero').focus();
         } else {
-            alert(resultado.mensagem); // Futuramente, podemos trocar isso pelo seu 'toast.js'
+            alert(resultado.mensagem); 
         }
-
-        // Restaura ícone original
         btnBuscaCep.innerHTML = '<i class="fa-solid fa-magnifying-glass"></i>';
     };
 
-    // Busca ao clicar no botão ou ao sair do campo (blur)
     btnBuscaCep.addEventListener('click', preencherEndereco);
     cepInput.addEventListener('blur', preencherEndereco);
 
-    // 4. Captura dos dados para o Backend
+    // 4. Envio dos dados para o Spring Boot
     form.addEventListener('submit', async (e) => {
-    e.preventDefault();
+        e.preventDefault();
 
-    const formData = new FormData(form);
-    const solicitacaoData = Object.fromEntries(formData.entries());
-    solicitacaoData.categorias = formData.getAll('categorias');
+        const formData = new FormData(form);
+        
+        // Como o banco espera uma única String (Enum), pegamos o primeiro marcado
+        const categoriasSelecionadas = formData.getAll('category');
+        if (categoriasSelecionadas.length === 0) {
+            alert('Por favor, selecione ao menos uma categoria.');
+            return;
+        }
 
-    try {
-        // Dispara o POST direto para o endpoint do Spring (/api/solicitacoes)
-        const resposta = await api.post('/solicitacoes', solicitacaoData);
-        
-        alert('Solicitação enviada com sucesso!'); 
-        // Aqui você poderá usar o toast.js para ficar mais bonito: toast.success('...');
-        
-        window.location.href = 'dashboard.html'; // Redireciona após o sucesso
-    } catch (error) {
-        alert(`Não foi possível enviar: ${error.message}`);
-    }
-});
+        // Monta o payload exato mapeado no seu Hibernate log
+        const payload = {
+            description: formData.get('description'),
+            location: `${formData.get('location')} - Nº ${formData.get('numero')}`,
+            category: categoriasSelecionadas[0], // Envia o Enum correspondente
+            priority: "MEDIUM" // Valor padrão inicial, trate no Spring se necessário
+        };
+
+        try {
+            // Ajuste o endpoint conforme a sua @RequestMapping do Controller (ex: /solicitacoes)
+            await api.post('/solicitacoes', payload);
+            alert('Solicitação cadastrada com sucesso!');
+            window.location.href = 'dashboard.html';
+        } catch (error) {
+            alert(`Falha ao salvar no banco: ${error.message}`);
+        }
+    });
 });
