@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Civitas - Nova Solicitação</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/pages/request-form.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="app-shell">
+        <header class="app-header">
+            <div class="header-logo">
+                <span>Civitas</span><div class="logo-dot"></div>
+            </div>
+            <div class="header-search">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" placeholder="Buscar...">
+            </div>
+            <div class="header-avatar">U</div>
+        </header>
+
+        <main class="page-content">
+            <form id="form-solicitacao" class="request-form">
+                
+                <section class="form-section">
+                    <h2 class="form-section-title">Informações de Contato</h2>
+                    
+                    <div class="form-group">
+                        <label for="nome-completo">Nome Completo:</label>
+                        <input type="text" id="nome-completo" name="nomeCompleto" required placeholder="Digite seu nome completo">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">E-mail de contato:</label>
+                        <input type="email" id="email" name="email" required placeholder="exemplo@email.com">
+                    </div>
+
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label for="telefone">Telefone:</label>
+                            <input type="tel" id="telefone" name="telefone" required placeholder="(44) 99999-9999">
+                        </div>
+                        <div class="form-group">
+                            <label for="cpf">CPF:</label>
+                            <input type="text" id="cpf" name="cpf" required placeholder="000.000.000-00">
+                        </div>
+                    </div>
+                </section>
+
+                <section class="form-section">
+                    <h2 class="form-section-title">Categoria do Problema</h2>
+                    
+                    <div class="category-grid">
+                        <label class="category-option">
+                            <input type="checkbox" name="categorias" value="infraestrutura">
+                            <span class="custom-checkbox"></span>
+                            Infraestrutura
+                        </label>
+                        <label class="category-option">
+                            <input type="checkbox" name="categorias" value="iluminacao">
+                            <span class="custom-checkbox"></span>
+                            Iluminação
+                        </label>
+                        <label class="category-option">
+                            <input type="checkbox" name="categorias" value="saneamento">
+                            <span class="custom-checkbox"></span>
+                            Saneamento
+                        </label>
+                        <label class="category-option">
+                            <input type="checkbox" name="categorias" value="saude">
+                            <span class="custom-checkbox"></span>
+                            Saúde
+                        </label>
+                        <label class="category-option">
+                            <input type="checkbox" name="categorias" value="seguranca">
+                            <span class="custom-checkbox"></span>
+                            Segurança
+                        </label>
+                        <label class="category-option">
+                            <input type="checkbox" name="categorias" value="meio-ambiente">
+                            <span class="custom-checkbox"></span>
+                            Meio Ambiente
+                        </label>
+                    </div>
+
+                    <div class="form-group-inline mt-4">
+                        <label class="category-option flex items-center">
+                            <input type="checkbox" id="check-outro" name="categorias" value="outro">
+                            <span class="custom-checkbox"></span>
+                            Outro
+                        </label>
+                        <input type="text" id="input-outro" name="categoriaOutro" disabled placeholder="Especifique a categoria">
+                    </div>
+                </section>
+
+                <section class="form-section">
+                    <h2 class="form-section-title">Problema</h2>
+                    
+                    <div class="form-group">
+                        <label for="descricao">Descreva qual o seu problema:</label>
+                        <textarea id="descricao" name="descricao" rows="4" required placeholder="Relate detalhadamente o ocorrido..."></textarea>
+                    </div>
+
+                    <div class="form-grid-cep-endereco">
+                        <div class="form-group relative">
+                            <label for="cep">CEP:</label>
+                            <div class="cep-input-wrapper">
+                                <input type="text" id="cep" name="cep" required placeholder="87000-000">
+                                <button type="button" id="btn-busca-cep" class="btn-search-cep">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="endereco">Endereço:</label>
+                            <input type="text" id="endereco" name="endereco" required placeholder="Rua, Avenida...">
+                        </div>
+                    </div>
+
+                    <div class="form-grid-address-details">
+                        <div class="form-group">
+                            <label for="bairro">Bairro:</label>
+                            <input type="text" id="bairro" name="bairro" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cidade">Cidade:</label>
+                            <input type="text" id="cidade" name="cidade" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="estado">Estado:</label>
+                            <input type="text" id="estado" name="estado" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="numero">Número:</label>
+                            <input type="text" id="numero" name="numero" required>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="form-actions mt-4">
+                    <button type="submit" class="btn-submit-form">Enviar</button>
+                </div>
+            </form>
+        </main>
+
+        <div id="bottom-bar-container"></div>
+    </div>
+
+    <script src="../js/components/bottom-bar.js"></script>
+    <script src="../js/api/cep.js"></script>
+    <script src="../js/pages/request-form.js"></script>
+    <script src="../js/api/api.js"></script> <script src="../js/api/cep.js"></script>
+    <script src="../js/pages/request-form.js"></script>
+</body>
+</html>
