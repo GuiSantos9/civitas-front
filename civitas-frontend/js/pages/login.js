@@ -26,7 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
-                body: params
+                body: params,
+                credentials: 'include' // <-- ESTA É A LINHA QUE SALVA O SEU LOGIN!
             });
 
             if (response.ok) {
