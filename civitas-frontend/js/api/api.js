@@ -1,34 +1,23 @@
-// Alterado para a porta 8080 baseada no seu log do Tomcat
-const BASE_URL = 'http://localhost:8080'; 
+// js/api/api.js
 
-/**
- * Recupera os cabeçalhos padrão para as requisições,
- * incluindo o Token JWT caso o usuário esteja autenticado.
- */
+const BASE_URL = 'http://localhost:8081'; 
+
 function getHeaders() {
-    const headers = {
+    return {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
     };
-
-    const token = localStorage.getItem('civitas_token');
-    if (token) {
-        headers['Authorization'] = `Bearer ${token}`;
-    }
-
-    return headers;
 }
 
-/**
- * Trata a resposta do servidor, convertendo para JSON ou lançando erros legíveis.
- */
 async function handleResponse(response) {
     if (response.status === 401 || response.status === 403) {
-        localStorage.removeItem('civitas_token');
+        // Se a sessão do Spring expirar, limpa o controle local e volta pro login
+        localStorage.removeItem('civitas_logged_in');
         localStorage.removeItem('civitas_user');
         
         if (!window.location.pathname.includes('login.html')) {
-            window.location.href = '/pages/login.html';
+            // Usa caminho relativo simples para evitar problemas com file:///
+            window.location.href = 'login.html'; 
         }
         throw new Error('Sessão expirada. Por favor, faça login novamente.');
     }
@@ -47,13 +36,13 @@ async function handleResponse(response) {
     return data;
 }
 
-// Objeto global da API
 const api = {
     async get(endpoint) {
         try {
             const response = await fetch(`${BASE_URL}${endpoint}`, {
                 method: 'GET',
-                headers: getHeaders()
+                headers: getHeaders(),
+                credentials: 'include' // <-- MUITO IMPORTANTE: Envia o Cookie de Sessão
             });
             return await handleResponse(response);
         } catch (error) {
@@ -67,7 +56,8 @@ const api = {
             const response = await fetch(`${BASE_URL}${endpoint}`, {
                 method: 'POST',
                 headers: getHeaders(),
-                body: JSON.stringify(body)
+                body: JSON.stringify(body),
+                credentials: 'include' // <-- MUITO IMPORTANTE: Envia o Cookie de Sessão
             });
             return await handleResponse(response);
         } catch (error) {
@@ -81,7 +71,8 @@ const api = {
             const response = await fetch(`${BASE_URL}${endpoint}`, {
                 method: 'PUT',
                 headers: getHeaders(),
-                body: JSON.stringify(body)
+                body: JSON.stringify(body),
+                credentials: 'include'
             });
             return await handleResponse(response);
         } catch (error) {
@@ -94,7 +85,8 @@ const api = {
         try {
             const response = await fetch(`${BASE_URL}${endpoint}`, {
                 method: 'DELETE',
-                headers: getHeaders()
+                headers: getHeaders(),
+                credentials: 'include'
             });
             return await handleResponse(response);
         } catch (error) {

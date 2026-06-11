@@ -1,0 +1,89 @@
+/* css/pages/request-detail.css */
+
+.back-button {
+    color: var(--color-text);
+    font-size: var(--text-lg);
+    cursor: pointer;
+    transition: color var(--transition-fast);
+}
+
+.back-button:hover {
+    color: var(--color-primary);
+}
+
+.request-summary {
+    background-color: var(--color-card);
+    padding: var(--space-4);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+}
+
+/* ── Linha do Tempo (Timeline) ───────────────────────────── */
+.timeline-section {
+    margin-top: var(--space-6);
+}
+
+.timeline {
+    position: relative;
+    padding-left: var(--space-8); /* Espaço para a linha e ícone */
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+/* A linha vertical que conecta os pontos */
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 15px; /* Centraliza a linha no ícone */
+    top: var(--space-2);
+    bottom: var(--space-6);
+    width: 2px;
+    background-color: var(--color-border);
+}
+
+.timeline-item {
+    position: relative;
+}
+
+/* O ícone circular de status */
+.timeline-icon {
+    position: absolute;
+    left: calc(var(--space-8) * -1); /* Joga o ícone para fora do padding */
+    top: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--text-sm);
+    background-color: var(--color-surface);
+    border: 2px solid var(--color-card);
+    z-index: 10;
+}
+
+.timeline-content {
+    padding: var(--space-3);
+    border-left: 3px solid var(--color-primary);
+}
+
+.timeline-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-1);
+}
+
+.timeline-header h3 {
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--color-text);
+}
+
+.timeline-date {
+    font-size: var(--text-xs);
+    color: var(--color-muted);
+    font-weight: 600;
+}

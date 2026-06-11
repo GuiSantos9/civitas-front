@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Civitas - Enviado</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <style>
+        .success-container { text-align: center; padding: var(--space-12) var(--space-6); }
+        .success-icon { font-size: 4rem; color: var(--color-success); margin-bottom: var(--space-6); }
+        .manager-card { background: var(--color-surface); padding: var(--space-4); border-radius: var(--radius-md); margin: var(--space-6) 0; border: 1px solid var(--color-border); }
+    </style>
+</head>
+<body>
+    <div class="app-shell">
+        <main class="page-content success-container">
+            <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
+            <h1 class="page-title">Solicitação Enviada</h1>
+            <p>Sua necessidade foi encaminhada para:</p>
+            <div class="manager-card">
+                <i class="fa-solid fa-user-tie" style="font-size: 2rem;"></i>
+                <h3 style="margin-top: 10px;">Antônio Arantes</h3>
+                <p class="text-muted">Gestor Responsável</p>
+            </div>
+            <button onclick="window.location.href='dashboard.html'" class="btn btn-outline btn-full">Voltar</button>
+        </main>
+    </div>
+</body>
+</html>

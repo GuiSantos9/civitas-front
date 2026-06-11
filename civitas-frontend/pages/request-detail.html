@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Civitas - Detalhes da Solicitação</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/pages/request-detail.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-shell">
+        <header class="app-header">
+            <div class="header-logo">
+                <a href="requests-list.html" class="back-button"><i class="fa-solid fa-arrow-left"></i></a>
+                <span style="margin-left: 8px;">Voltar</span>
+            </div>
+            <div class="header-avatar">G</div>
+        </header>
+
+        <main class="page-content">
+            <section class="request-summary mb-4">
+                <div class="flex justify-between items-center mb-2">
+                    <h1 class="page-title" style="margin-bottom: 0; text-align: left;">Pavimentação</h1>
+                    <span class="chip chip-medium">Prioridade Média</span>
+                </div>
+                <p class="text-muted"><i class="fa-solid fa-location-dot"></i> Rua Janeiro, 998</p>
+                <p class="mt-4"><strong>Solicitante:</strong> Cidadão</p>
+                <p><strong>Descrição:</strong> Buraco na via causando risco de acidentes para ciclistas e motociclistas.</p>
+            </section>
+
+            <section class="timeline-section">
+                <h2 class="section-title">Histórico de Atendimento</h2>
+                <div class="timeline">
+                    </div>
+            </section>
+        </main>
+
+        <div id="bottom-bar-container"></div>
+    </div>
+
+    <script src="../js/api/api.js"></script>
+    <script src="../js/components/bottom-bar.js"></script>
+    <script src="../js/pages/request-detail.js"></script>
+</body>
+</html>

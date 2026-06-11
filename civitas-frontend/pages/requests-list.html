@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Civitas - Menu Inicial</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/components.css">
+</head>
+<body>
+    <div class="app-shell">
+        <header class="app-header">
+            <div class="header-logo"><span>Civitas</span><div class="logo-dot"></div></div>
+            <div class="header-search"><input type="text" placeholder="Buscar solicitações..."></div>
+            <div class="header-avatar">A</div>
+        </header>
+
+        <main class="page-content">
+            <h1 class="page-title">Solicitações Recentes</h1>
+            <div id="requests-container" class="flex flex-col gap-4">
+                </div>
+        </main>
+        <div id="bottom-bar-container"></div>
+    </div>
+    <script src="../js/api/api.js"></script>
+    <script src="../js/components/bottom-bar.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const container = document.getElementById('requests-container');
+            try {
+                const requests = await api.get('/api/requests');
+                container.innerHTML = requests.map(req => `
+                    <div class="card" onclick="window.location.href='request-detail.html?id=${req.id}'" style="cursor:pointer">
+                        <div class="flex justify-between">
+                            <h3 class="card-title">${req.category}</h3>
+                            <span class="text-muted">${new Date().toLocaleDateString()}</span>
+                        </div>
+                        <p class="mt-2">${req.description}</p>
+                        <p class="text-muted mt-2"><i class="fa-solid fa-location-dot"></i> ${req.location}</p>
+                    </div>
+                `).join('');
+            } catch (e) {
+                container.innerHTML = '<p class="text-center text-muted">Nenhuma solicitação encontrada.</p>';
+            }
+        });
+    </script>
+</body>
+</html>

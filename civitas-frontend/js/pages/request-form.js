@@ -1,85 +1,47 @@
-// js/pages/request-form.js
-
 document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('form-solicitacao');
-    const checkOutro = document.getElementById('check-outro');
-    const inputOutro = document.getElementById('input-outro');
-    const cepInput = document.getElementById('cep');
-    const btnBuscaCep = document.getElementById('btn-busca-cep');
+    const formSolicitacao = document.getElementById('form-solicitacao');
+    const btnSubmit = formSolicitacao.querySelector('button[type="submit"]');
 
-    // 1. Controle da categoria "Outro"
-    checkOutro.addEventListener('change', (e) => {
-        if (e.target.checked) {
-            inputOutro.disabled = false;
-            inputOutro.required = true;
-            inputOutro.focus();
-        } else {
-            inputOutro.disabled = true;
-            inputOutro.required = false;
-            inputOutro.value = '';
-        }
-    });
-
-    // 2. Máscara para o CEP (87000-000)
-    cepInput.addEventListener('input', (e) => {
-        let value = e.target.value.replace(/\D/g, '');
-        if (value.length > 5) {
-            value = value.replace(/^(\d{5})(\d)/, '$1-$2');
-        }
-        e.target.value = value;
-    });
-
-    // 3. Autocompletar endereço com ViaCEP
-    const preencherEndereco = async () => {
-        const cep = cepInput.value;
-        if (cep.length < 8) return;
-
-        btnBuscaCep.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
-        const resultado = await fetchEnderecoByCep(cep);
-
-        if (!resultado.erro) {
-            document.getElementById('endereco').value = `${resultado.logradouro || ''}, ${resultado.bairro || ''}`;
-            document.getElementById('bairro').value = resultado.bairro || '';
-            document.getElementById('cidade').value = resultado.localidade || '';
-            document.getElementById('estado').value = resultado.uf || '';
-            document.getElementById('numero').focus();
-        } else {
-            alert(resultado.mensagem); 
-        }
-        btnBuscaCep.innerHTML = '<i class="fa-solid fa-magnifying-glass"></i>';
-    };
-
-    btnBuscaCep.addEventListener('click', preencherEndereco);
-    cepInput.addEventListener('blur', preencherEndereco);
-
-    // 4. Envio dos dados para o Spring Boot
-    form.addEventListener('submit', async (e) => {
+    formSolicitacao.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        const formData = new FormData(form);
-        
-        // Como o banco espera uma única String (Enum), pegamos o primeiro marcado
-        const categoriasSelecionadas = formData.getAll('category');
-        if (categoriasSelecionadas.length === 0) {
-            alert('Por favor, selecione ao menos uma categoria.');
-            return;
+        // Animação de carregamento no botão
+        const originalBtnText = btnSubmit.innerHTML;
+        btnSubmit.disabled = true;
+        btnSubmit.innerHTML = '<div class="spinner" style="margin: 0 auto;"></div>';
+
+        // Captura a categoria selecionada (Radio Button)
+        const categoryRadios = document.getElementsByName('category');
+        let selectedCategory = 'FLOORING'; // Valor Padrão
+        for (const radio of categoryRadios) {
+            if (radio.checked) {
+                selectedCategory = radio.value;
+                break;
+            }
         }
 
-        // Monta o payload exato mapeado no seu Hibernate log
-        const payload = {
-            description: formData.get('description'),
-            location: `${formData.get('location')} - Nº ${formData.get('numero')}`,
-            category: categoriasSelecionadas[0], // Envia o Enum correspondente
-            priority: "MEDIUM" // Valor padrão inicial, trate no Spring se necessário
+        // Monta o objeto com os mesmos nomes (fields) do seu RequestDTO no Spring
+        const requestData = {
+            category: selectedCategory,
+            description: formSolicitacao.querySelector('textarea[name="description"]').value,
+            location: formSolicitacao.querySelector('input[name="location"]').value,
+            priority: 'MEDIUM' // Prioridade padrão inicial
         };
 
         try {
-            // Ajuste o endpoint conforme a sua @RequestMapping do Controller (ex: /solicitacoes)
-            await api.post('/solicitacoes', payload);
-            alert('Solicitação cadastrada com sucesso!');
-            window.location.href = 'dashboard.html';
+            // Faz o POST para criar a solicitação no banco H2
+            await api.post('/api/requests', requestData);
+            
+            // Se der certo, redireciona para a Tela 02 de Sucesso
+            window.location.href = 'request-success.html';
+
         } catch (error) {
-            alert(`Falha ao salvar no banco: ${error.message}`);
+            console.error('Erro ao enviar solicitação:', error);
+            alert(`Falha ao enviar solicitação: ${error.message}`);
+        } finally {
+            // Restaura o botão caso dê erro
+            btnSubmit.disabled = false;
+            btnSubmit.innerHTML = originalBtnText;
         }
     });
 });
