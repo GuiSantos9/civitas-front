@@ -93,3 +93,95 @@ function renderLineChart(context) {
         }
     });
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    // --- Lógica de Troca de Telas (SPA) ---
+    const viewDashboard = document.getElementById('view-dashboard');
+    const viewFormulario = document.getElementById('view-formulario');
+    const btnAbrirForm = document.getElementById('btn-abrir-formulario');
+    const btnVoltar = document.getElementById('btn-voltar-dashboard');
+
+    if (btnAbrirForm && btnVoltar) {
+        btnAbrirForm.addEventListener('click', () => {
+            viewDashboard.style.display = 'none';    // Esconde gráficos
+            viewFormulario.style.display = 'block';  // Mostra formulário
+        });
+
+        btnVoltar.addEventListener('click', () => {
+            viewFormulario.style.display = 'none';   // Esconde formulário
+            viewDashboard.style.display = 'block';   // Mostra gráficos
+        });
+    }
+
+    // --- Lógica do Formulário (Anonimato e Outros) ---
+    const cbAnonimo = document.getElementById('anonimo');
+    const contatoFields = document.getElementById('contato-fields');
+    const radioOutro = document.getElementById('radio-outro');
+    const radiosCategoria = document.querySelectorAll('input[name="category"]');
+    const groupOutroTexto = document.getElementById('group-outro-texto');
+    const inputOutroTexto = document.getElementById('outro-texto');
+
+    if (cbAnonimo) {
+        cbAnonimo.addEventListener('change', () => {
+            const inputs = contatoFields.querySelectorAll('input');
+            if (cbAnonimo.checked) {
+                contatoFields.style.opacity = '0.5';
+                inputs.forEach(input => { input.disabled = true; input.value = ''; });
+            } else {
+                contatoFields.style.opacity = '1';
+                inputs.forEach(input => input.disabled = false);
+            }
+        });
+    }
+
+    if (radiosCategoria) {
+        radiosCategoria.forEach(radio => {
+            radio.addEventListener('change', () => {
+                if (radioOutro.checked) {
+                    groupOutroTexto.style.display = 'block';
+                    inputOutroTexto.required = true;
+                } else {
+                    groupOutroTexto.style.display = 'none';
+                    inputOutroTexto.required = false;
+                    inputOutroTexto.value = '';
+                }
+            });
+        });
+    }
+
+    // --- Lógica de Envio para o Backend ---
+    const form = document.getElementById('form-new-request');
+    if (form) {
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btnEnviar = document.getElementById('btn-enviar-solicitacao');
+            btnEnviar.textContent = 'Enviando...';
+            btnEnviar.disabled = true;
+
+            let catSelecionada = document.querySelector('input[name="category"]:checked').value;
+            let payload = {
+                description: document.getElementById('description').value,
+                category: catSelecionada,
+                location: `${document.getElementById('endereco').value}, ${document.getElementById('numero').value} - ${document.getElementById('bairro').value}`
+            };
+
+            try {
+                // Dispara para o seu Spring Boot
+                await api.post('/api/requests', payload);
+                alert('Solicitação criada com sucesso!');
+                form.reset();
+                
+                // Volta para os gráficos automaticamente após salvar
+                viewFormulario.style.display = 'none';
+                viewDashboard.style.display = 'block';
+                
+            } catch (error) {
+                console.error('Erro:', error);
+                alert('Erro ao salvar. Verifique o backend.');
+            } finally {
+                btnEnviar.textContent = 'Enviar Solicitação';
+                btnEnviar.disabled = false;
+            }
+        });
+    }
+});

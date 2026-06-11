@@ -92,3 +92,53 @@
     width: 100%;
     max-height: 240px; /* Impede que o gráfico estoure a tela mobile */
 }
+
+/* ========================================= */
+/* ESTILOS DO FORMULÁRIO (NOVA SOLICITAÇÃO)  */
+/* ========================================= */
+
+/* 1. Formulário com limite de largura e centralizado */
+.request-form { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 20px; 
+    padding: 20px; 
+    background: #fff; 
+    border-radius: 8px; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
+    /* AS 3 LINHAS NOVAS ABAIXO: */
+    max-width: 800px; 
+    margin: 0 auto; 
+    width: 100%; 
+}
+
+.form-section { border: none; padding: 0; margin: 0; }
+.section-title { font-size: 14px; font-weight: bold; color: #333; margin-bottom: 12px; text-transform: uppercase; border-bottom: 1px solid #eee; padding-bottom: 8px; }
+.anonimo-checkbox-group { margin-bottom: 16px; font-size: 14px; }
+.form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-grid-cep { display: grid; grid-template-columns: 1fr 2fr; gap: 16px; margin-top: 12px; }
+.form-grid-endereco-detalhes { display: grid; grid-template-columns: 2fr 2fr 1fr 1fr; gap: 16px; margin-top: 12px; }
+.checkbox-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.radio-label { font-size: 14px; color: #555; cursor: pointer; }
+.form-control { display: flex; flex-direction: column; gap: 4px; }
+.form-control label { font-size: 12px; font-weight: 600; color: #555; }
+
+/* 2. Inputs que respeitam as margens da tela */
+.form-control input, .form-control textarea { 
+    padding: 10px; 
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+    font-size: 14px; 
+    /* AS 2 LINHAS NOVAS ABAIXO: */
+    width: 100%; 
+    box-sizing: border-box; 
+}
+
+.form-control input:focus, .form-control textarea:focus { border-color: #1B4F8A; outline: none; }
+.form-actions { display: flex; justify-content: center; margin-top: 20px; }
+
+/* Botões */
+.btn-nova-solicitacao { background: #1B4F8A; color: white; padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
+.btn-voltar { background: transparent; color: #1B4F8A; border: 1px solid #1B4F8A; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+.btn-submit { background: #fff; color: #333; border: 2px solid #333; padding: 12px 40px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+.btn-submit:hover { background: #333; color: #fff; }

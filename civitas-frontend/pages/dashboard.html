@@ -24,45 +24,81 @@
             <div class="header-avatar">G</div>
         </header>
 
-        <main class="page-content">
-            <h1 class="page-title">Dias de suas solicitações</h1>
+        <main class="container page-content">
+    
+    <div id="view-dashboard">
+        <div class="actions-header" style="display: flex; justify-content: flex-end; margin-bottom: 16px;">
+            <button id="btn-abrir-formulario" class="btn-nova-solicitacao">
+                + Criar Nova Solicitação
+            </button>
+        </div>
+        
+        </div>
 
-            <section class="card mb-4">
-                <div class="calendar-header">
-                    <button class="btn-cal-nav"><i class="fa-solid fa-chevron-left"></i></button>
-                    <span class="calendar-month-year">JUNHO 2026</span>
-                    <button class="btn-cal-nav"><i class="fa-solid fa-chevron-right"></i></button>
-                </div>
-                
-                <div class="calendar-grid-weekdays">
-                    <div>S</div><div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div>
-                </div>
-                
-                <div class="calendar-grid-days">
-                    <span class="day-muted">31</span>
-                    <span>1</span><span>2</span><span class="day-active">3</span><span>4</span><span>5</span><span>6</span>
-                    <span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span>
-                    <span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span>
-                    <span>21</span><span>22</span><span>23</span><span>24</span><span>25</span><span>26</span><span>27</span>
-                    <span>28</span><span>29</span><span>30</span>
-                    <span class="day-muted">1</span><span class="day-muted">2</span><span class="day-muted">3</span><span class="day-muted">4</span>
-                </div>
-            </section>
 
-            <section class="chart-section mb-4">
-                <h2 class="section-title text-center">Taxa de melhora nas cidades</h2>
-                <div class="card chart-container">
-                    <canvas id="chartLineMelhoria"></canvas>
-                </div>
-            </section>
+    <div id="view-formulario" style="display: none;">
+        <div class="actions-header" style="margin-bottom: 16px;">
+            <button id="btn-voltar-dashboard" class="btn-voltar">
+                ⬅ Voltar para o Dashboard
+            </button>
+        </div>
 
-            <section class="chart-section">
-                <h2 class="section-title text-center">Serviços mais solicitados</h2>
-                <div class="card chart-container flex justify-center">
-                    <canvas id="chartPieServicos"></canvas>
+        <form id="form-new-request" class="request-form">
+            <fieldset class="form-section">
+                <legend class="section-title">INFORMAÇÕES DE CONTATO:</legend>
+                <div class="anonimo-checkbox-group">
+                    <input type="checkbox" id="anonimo" name="anonimo">
+                    <label for="anonimo">Desejo fazer uma denúncia anônima (Opcional)</label>
                 </div>
-            </section>
-        </main>
+                <div id="contato-fields" class="form-grid-2">
+                    <div class="form-control"><label>Nome Completo:</label><input type="text" id="nome"></div>
+                    <div class="form-control"><label>E-mail:</label><input type="email" id="email"></div>
+                    <div class="form-control"><label>Telefone:</label><input type="text" id="telefone"></div>
+                    <div class="form-control"><label>CPF:</label><input type="text" id="cpf"></div>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-section">
+                <legend class="section-title">CATEGORIA DO PROBLEMA</legend>
+                <div class="checkbox-grid">
+                    <label class="radio-label"><input type="radio" name="category" value="FLOORING" required> Infraestrutura</label>
+                    <label class="radio-label"><input type="radio" name="category" value="LIGHTING"> Iluminação</label>
+                    <label class="radio-label"><input type="radio" name="category" value="SANITATION"> Saneamento</label>
+                    <label class="radio-label"><input type="radio" name="category" value="HEALTH"> Saúde</label>
+                    <label class="radio-label"><input type="radio" name="category" value="SCHOOL_SAFETY"> Segurança</label>
+                    <label class="radio-label"><input type="radio" name="category" value="ENVIRONMENT"> Meio Ambiente</label>
+                    <label class="radio-label"><input type="radio" name="category" value="OTHER" id="radio-outro"> Outro</label>
+                </div>
+                <div class="form-control mt-3" id="group-outro-texto" style="display: none;">
+                    <input type="text" id="outro-texto" placeholder="Qual área?">
+                </div>
+            </fieldset>
+
+            <fieldset class="form-section">
+                <legend class="section-title">PROBLEMA</legend>
+                <div class="form-control">
+                    <label>Descreva qual o seu problema:</label>
+                    <textarea id="description" rows="3" required></textarea>
+                </div>
+                <div class="form-grid-cep">
+                    <div class="form-control"><label>CEP:</label><input type="text" id="cep" required></div>
+                    <div class="form-control"><label>Endereço:</label><input type="text" id="endereco" required></div>
+                </div>
+                <div class="form-grid-endereco-detalhes">
+                    <div class="form-control"><label>Bairro:</label><input type="text" id="bairro" required></div>
+                    <div class="form-control"><label>Cidade:</label><input type="text" id="cidade" required></div>
+                    <div class="form-control"><label>Estado:</label><input type="text" id="estado" required></div>
+                    <div class="form-control"><label>Número:</label><input type="text" id="numero" required></div>
+                </div>
+            </fieldset>
+
+            <div class="form-actions">
+                <button type="submit" id="btn-enviar-solicitacao" class="btn-submit">Enviar Solicitação</button>
+            </div>
+        </form>
+    </div>
+</main>
+
 
         <div id="bottom-bar-container"></div>
     </div>
