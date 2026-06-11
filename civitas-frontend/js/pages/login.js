@@ -33,7 +33,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 localStorage.setItem('civitas_logged_in', 'true');
                 localStorage.setItem('civitas_user', JSON.stringify({ username: usernameInput }));
 
-                window.location.href = 'file:///C:/Users/NOTEBOOK/Desktop/Estudos-Projetos/civitas/civitas-frontend/pages/dashbord.html';
+                window.location.href = 'dashboard.html';  
+                
             }
             else if (response.status === 401) {
                 throw new Error('Usuário ou senha incorretos.');
